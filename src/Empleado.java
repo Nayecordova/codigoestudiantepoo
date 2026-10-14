@@ -19,132 +19,70 @@
  *    - Si es valido: asignar a this.sueldo y retornar true.
  *    - Si es invalido: mostrar mensaje de error en consola y retornar false.
  */
+
+
 public class Empleado {
-
-    // Constante institucional: Salario Basico Unificado en Ecuador
-    public static final double SALARIO_BASICO_ECUADOR = 460.00;
-
-    // Atributos privados (Encapsulamiento estricto)
-    private String cedula;
     private String nombre;
     private int edad;
     private double sueldo;
-    private String cargo;
+    private String cargo; // Dependiendo de lo que ya venía en la plantilla
 
-    /**
-     * Constructor con inicializacion protegida.
-     * Utiliza los setters para aplicar las invariantes de validacion desde la creacion.
-     */
-    public Empleado(String cedula, String nombre, int edad, double sueldo, String cargo) {
-        this.cedula = cedula;
+    // Constante del Salario Básico Unificado (SBU)
+    private static final double SBU = 460.00;
+
+    // Constructor
+    public Empleado(String nombre, int edad, double sueldo, String cargo) {
         this.nombre = nombre;
-        this.cargo = cargo;
-
-        // Invocacion a los setters que deben validar las invariantes
         setEdad(edad);
         setSueldo(sueldo);
+        this.cargo = cargo;
     }
 
-    // ------------------------------------------------------------------------
-    // GETTERS BASICOS (Lectura publica del estado interno)
-    // ------------------------------------------------------------------------
-    public String getCedula() {
-        return this.cedula;
-    }
-
+    // Getters y Setters
     public String getNombre() {
-        return this.nombre;
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public int getEdad() {
-        return this.edad;
+        return edad;
+    }
+
+    // Validación de la edad (Rango legal de 18 a 70 años)
+    public void setEdad(int nuevaEdad) {
+        if (nuevaEdad >= 18 && nuevaEdad <= 70) {
+            this.edad = nuevaEdad;
+        } else {
+            System.out.println("Error: La edad debe estar entre 18 y 70 años.");
+        }
     }
 
     public double getSueldo() {
-        return this.sueldo;
+        return sueldo;
+    }
+
+    // Validación del sueldo (Mayor o igual al SBU de $460.00)
+    public void setSueldo(double nuevoSueldo) {
+        if (nuevoSueldo >= SBU) {
+            this.sueldo = nuevoSueldo;
+        } else {
+            System.out.println("Error: El sueldo debe ser mayor o igual al SBU ($460.00).");
+        }
     }
 
     public String getCargo() {
-        return this.cargo;
-    }
-
-    // ------------------------------------------------------------------------
-    // SETTERS BASICOS
-    // ------------------------------------------------------------------------
-    public void setNombre(String nombre) {
-        if (nombre != null && !nombre.trim().isEmpty()) {
-            this.nombre = nombre.trim();
-        } else {
-            System.out.println("  [ERROR] El nombre no puede estar vacio.");
-        }
+        return cargo;
     }
 
     public void setCargo(String cargo) {
-        if (cargo != null && !cargo.trim().isEmpty()) {
-            this.cargo = cargo.trim();
-        } else {
-            System.out.println("  [ERROR] El cargo no puede estar vacio.");
-        }
+        this.cargo = cargo;
     }
 
-    // ------------------------------------------------------------------------
-    // ACTIVIDAD DEL ESTUDIANTE: IMPLEMENTAR INVARIANTES DE CLASE
-    // ------------------------------------------------------------------------
-
-    /**
-     * TODO (ACTIVIDAD ESTUDIANTE):
-     * Valida y asigna la edad del empleado.
-     * 
-     * Regla de Negocio / Invariante:
-     * - La edad debe estar en el rango legal laboral de 18 a 70 anios inclusive.
-     * - Si cumple: asignar this.edad = nuevaEdad y retornar true.
-     * - Si NO cumple: imprimir mensaje de error "[ERROR INVARIANTE]...",
-     *   si this.edad == 0 asignar valor por defecto seguro (18), y retornar false.
-     * 
-     * @param nuevaEdad La edad a asignar
-     * @return true si la edad es valida y fue asignada; false en caso contrario
-     */
-    public boolean setEdad(int nuevaEdad) {
-        // ====================================================================
-        // ESCRIBE TU CODIGO AQUI:
-        // PISTA: Evalua con un if (nuevaEdad >= 18 && nuevaEdad <= 70)
-        // ====================================================================
-
-        // [PLANTILLA TEMPORAL]: Reemplazar con tu implementacion completa
-        this.edad = nuevaEdad; 
-        return true;
-    }
-
-    /**
-     * TODO (ACTIVIDAD ESTUDIANTE):
-     * Valida y asigna el sueldo del empleado.
-     * 
-     * Regla de Negocio / Invariante:
-     * - El sueldo no puede ser inferior a SALARIO_BASICO_ECUADOR ($460.00).
-     * - Si cumple: asignar this.sueldo = nuevoSueldo y retornar true.
-     * - Si NO cumple: imprimir mensaje de error "[ERROR INVARIANTE]...",
-     *   si this.sueldo == 0 asignar valor por defecto (SALARIO_BASICO_ECUADOR), y retornar false.
-     * 
-     * @param nuevoSueldo El salario mensual en dolares
-     * @return true si el salario cumple con la invariante; false en caso contrario
-     */
-    public boolean setSueldo(double nuevoSueldo) {
-        // ====================================================================
-        // ESCRIBE TU CODIGO AQUI:
-        // PISTA: Evalua con un if (nuevoSueldo >= SALARIO_BASICO_ECUADOR)
-        // ====================================================================
-
-        // [PLANTILLA TEMPORAL]: Reemplazar con tu implementacion completa
-        this.sueldo = nuevoSueldo;
-        return true;
-    }
-
-    // ------------------------------------------------------------------------
-    // METODO DE IMPRESION DE FICHA LABORAL
-    // ------------------------------------------------------------------------
     public void imprimirFicha() {
-        System.out.println("  [EMPLEADO] Cedula: " + this.cedula +
-                           " | Nombre: " + this.nombre +
+        System.out.println(" | Nombre: " + this.nombre +
                            " | Edad: " + this.edad + " anios" +
                            " | Cargo: " + this.cargo +
                            " | Sueldo: $" + String.format("%.2f", this.sueldo));
